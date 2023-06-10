@@ -1,6 +1,6 @@
-# Summary
+# Sommario
 
-[Introduction](index.md)
+[Introduzione](index.md)
 
 - [Hello World](hello.md)
     - [Comments](hello/comment.md)
