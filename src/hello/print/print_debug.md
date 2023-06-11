@@ -1,13 +1,13 @@
 # Debug
 
-All types which want to use `std::fmt` formatting `traits` require an
-implementation to be printable. Automatic implementations are only provided
-for types such as in the `std` library. All others *must* be manually
-implemented somehow.
+Tutti i tipi che vogliono utilizzare la formattazione `std::fmt` richiedono un'implementazione
+per essere stampati. Le implementazioni automatiche sono fornite solo
+per tipi come quelli della libreria `std`. Tutti gli altri *devono* essere implementati manualmente
+in qualche modo.
 
-The `fmt::Debug` `trait` makes this very straightforward. *All* types can
-`derive` (automatically create) the `fmt::Debug` implementation. This is
-not true for `fmt::Display` which must be manually implemented.
+Il `trait` `fmt::Debug` rende questo molto semplice. *Tutti* i tipi possono
+`implementare` (creare automaticamente) l'implementazione di `fmt::Debug`. Questo non è
+non è vero per `fmt::Display`, che deve essere implementato manualmente.
 
 ```rust
 // This structure cannot be printed either with `fmt::Display` or
