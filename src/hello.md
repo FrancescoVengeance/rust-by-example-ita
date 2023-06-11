@@ -4,42 +4,39 @@ Questo è il codice di un programma Rust che stampa `Hello World!`:
 
 ```rust,editable
 // Questo è un commento ed è ignorato dal compilatore.
-// You can test this code by clicking the "Run" button over there ->
-// or if you prefer to use your keyboard, you can use the "Ctrl + Enter"
-// shortcut.
+// Puoi testare questo codice cliccando sul pulsante "Run" ->
+// o se preferisci le shortcut puoi premere "Ctrl + Enter"
 
-// This code is editable, feel free to hack it!
-// You can always return to the original code by clicking the "Reset" button ->
+// Questo codice è modificabile, sentiti libero di farlo!
+// Puoi sempre ritornare indietro premendo il tasto "Reset" ->
 
-// This is the main function.
+// Questa è la funzione main.
 fn main() {
-    // Statements here are executed when the compiled binary is called.
 
-    // Print text to the console.
+    // Stampa il testo in console.
     println!("Hello World!");
 }
 ```
 
-`println!` is a [*macro*][macros] that prints text to the
-console.
+`println!` è una [*macro*][macros] che stampa il testo in console
 
-A binary can be generated using the Rust compiler: `rustc`.
+Un file binario può essere generato utilizzando il compilatore: `rustc`.
 
 ```bash
 $ rustc hello.rs
 ```
 
-`rustc` will produce a `hello` binary that can be executed.
+`rustc` restituirà un file binario chiamato `hello` che potrà essere eseguito.
 
 ```bash
 $ ./hello
 Hello World!
 ```
 
-### Activity
+### Esercizio
 
-Click 'Run' above to see the expected output. Next, add a new
-line with a second `println!` macro so that the output shows:
+Premi il pulsante 'Run' , come mostrato sopra, per vedere l'output. Dopo, aggiungi una nuova riga
+con un altra macro `println!` per mostrare avere come risultato:
 
 ```text
 Hello World!
