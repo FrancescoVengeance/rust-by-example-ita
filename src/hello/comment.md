@@ -1,49 +1,47 @@
-# Comments
+# Commenti
 
-Any program requires comments, and Rust supports
-a few different varieties:
+Ogni programma ha bisogno dei commenti e Rust ne supporta di diversi formati
 
-* *Regular comments* which are ignored by the compiler:
-  * `// Line comments which go to the end of the line.`
-  * `/* Block comments which go to the closing delimiter. */`
-* *Doc comments* which are parsed into HTML library [documentation][docs]:
-  * `/// Generate library docs for the following item.`
-  * `//! Generate library docs for the enclosing item.`
+* *Commenti standard* i quali sono ignorati dal compilatore:
+  * `// Commento in-line valido fine a fine riga.`
+  * `/* Blocco di commento che termina con il delimiter . */`
+* *Documentazione* mostrate in formato HTML [documentazione][docs]:
+  * `/// Genera documentazione per l'elemento seguente.`
+  * `//! Genera documentazione per l'elemento che lo contiene.`
 
 ```rust,editable
 fn main() {
-    // This is an example of a line comment.
-    // There are two slashes at the beginning of the line.
-    // And nothing written after these will be read by the compiler.
+    // Questo è un esempio di commento in-line
+    // Ci sono due slash all'inizio della riga.
+    // E niente scritto dopo i due slash è interpretato dal compilatore.
 
     // println!("Hello, world!");
 
-    // Run it. See? Now try deleting the two slashes, and run it again.
+    // Eseguilo. Vedi? Adesso rieseguilo eliminando i due slash.
 
     /*
-     * This is another type of comment, a block comment. In general,
-     * line comments are the recommended comment style. But block comments
-     * are extremely useful for temporarily disabling chunks of code.
-     * /* Block comments can be /* nested, */ */ so it takes only a few
-     * keystrokes to comment out everything in this main() function.
-     * /*/*/* Try it yourself! */*/*/
+     * Questo è un altro tipo di commento, un blocco di commento. In generale,
+     * i commenti in-line sono i più utilizzati. Ma i blocco di commento
+     * è molto utile per disabilitare all'instante molte rige di codice.
+     * /* Blocchi di commento possono essere /* innestati, */ */ quindi basta
+     * digitare un paio di caratteri per commentare tutto in questa funzione main().
+     * /*/*/* Prova! */*/*/
      */
 
     /*
-    Note: The previous column of `*` was entirely for style. There's
-    no actual need for it.
+    Nota: La colonna di `*` è solo per stile ma in realtà non ce n'è bisogno.
     */
 
-    // You can manipulate expressions more easily with block comments
-    // than with line comments. Try deleting the comment delimiters
-    // to change the result:
+    // È possibile manipolare le espressioni più facilmente con i commenti in blocco
+    // rispetto a quelli in-line. Prova a eliminare i delimitatori dei commenti
+    // per modificare il risultato:
     let x = 5 + /* 90 + */ 5;
     println!("Is `x` 10 or 100? x = {}", x);
 }
 ```
 
-### See also:
+### Vedi anche:
 
-[Library documentation][docs]
+[Documentare una libreria][docs]
 
 [docs]: ../meta/doc.md

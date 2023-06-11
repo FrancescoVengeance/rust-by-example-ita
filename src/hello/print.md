@@ -1,109 +1,105 @@
-# Formatted print
+# Stampare testo formattato
 
-Printing is handled by a series of [`macros`][macros] defined in
-[`std::fmt`][fmt] some of which include:
+La stampa è gestita da una serie di  [`macro`][macros] definite nel modulo
+[`std::fmt`][fmt] alcune delle quali sono:
 
-* `format!`: write formatted text to [`String`][string]
-* `print!`: same as `format!` but the text is printed to the console
-  (io::stdout).
-* `println!`: same as `print!` but a newline is appended.
-* `eprint!`: same as `print!` but the text is printed to the standard error
+* `format!`: scrive testo formattato su una [`Stringa`][string]
+* `print!`: simile `format!` ma stampa il testo in console (io::stdout).
+* `println!`: come `print!` ma stampa e va a capo.
+* `eprint!`: lo stesso di `print!`, ma il testo viene stampato sulla standard error
   (io::stderr).
-* `eprintln!`: same as `eprint!` but a newline is appended.
+* `eprintln!`: come `eprint!` ma stampa e va a capo.
 
-All parse text in the same fashion. As a plus, Rust checks formatting
-correctness at compile time.
+Tutti i testi vengono analizzati nello stesso modo. 
+Inoltre, Rust controlla la correttezza della formattazione durante la compilazione.
 
 ```rust,editable,ignore,mdbook-runnable
 fn main() {
-    // In general, the `{}` will be automatically replaced with any
-    // arguments. These will be stringified.
+    // In generale, le parentesi graffe `{}` vengono automaticamente sostituite con gli argomenti specificati. 
+    // Gli argomenti passati alla macro vengono convertiti in stringhe.
     println!("{} days", 31);
 
-    // Positional arguments can be used. Specifying an integer inside `{}`
-    // determines which additional argument will be replaced. Arguments start
-    // at 0 immediately after the format string.
+    // Gli argomenti possono anche essere posizionali. Specificando un indice all'interno di {}
+    // si determina quale argomento in quella determinata posizione verrà sostituito
+    // Gli indici degli argomenti partono da 0 immediatamente dopo la stringa di formattazione.
     println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
 
-    // As can named arguments.
+    // Gli argomenti possono anche essere nominali
     println!("{subject} {verb} {object}",
              object="the lazy dog",
              subject="the quick brown fox",
              verb="jumps over");
 
-    // Different formatting can be invoked by specifying the format character
-    // after a `:`.
+    // È possibile richiamare diversi tipi di formattazione specificando il carattere di formattazione corrispondente
+    // dopo il carattere `:`.
     println!("Base 10:               {}",   69420); // 69420
     println!("Base 2 (binary):       {:b}", 69420); // 10000111100101100
     println!("Base 8 (octal):        {:o}", 69420); // 207454
     println!("Base 16 (hexadecimal): {:x}", 69420); // 10f2c
     println!("Base 16 (hexadecimal): {:X}", 69420); // 10F2C
 
-    // You can right-justify text with a specified width. This will
-    // output "    1". (Four white spaces and a "1", for a total width of 5.)
+    // È possibile allineare a destra il testo con una larghezza specificata. Questo stamperà
+    // Questo stamperà "    1". (Quattro spazi e un "1", per una larghezza totale di 5.)
     println!("{number:>5}", number=1);
 
-    // You can pad numbers with extra zeroes,
+    // È possibile aggiungere zeri aggiuntivi per completare i numeri
     println!("{number:0>5}", number=1); // 00001
-    // and left-adjust by flipping the sign. This will output "10000".
+    // E' possibile allineare a sinistra invertendo il segno. Ciò produrrà l'output "10000".
     println!("{number:0<5}", number=1); // 10000
 
-    // You can use named arguments in the format specifier by appending a `$`.
+    // È possibile utilizzare gli argomenti nominali nel formato specificatore aggiungendo un `$`.
     println!("{number:0>width$}", number=1, width=5);
 
-    // Rust even checks to make sure the correct number of arguments are used.
+    // Rust controlla anche che il numero corretto di argomenti venga utilizzato.
     println!("My name is {0}, {1} {0}", "Bond");
-    // FIXME ^ Add the missing argument: "James"
+    // FIXME ^ Aggiungi l'argomento mancante: "James"
 
-    // Only types that implement fmt::Display can be formatted with `{}`. User-
-    // defined types do not implement fmt::Display by default.
+    // Solo i tipi che implementano `fmt::Display` possono essere formattati con `{}`.
+    // I tipi definiti dall'utente non implementano `fmt::Display` automaticamente.
 
-    #[allow(dead_code)] // disable `dead_code` which warn against unused module
+    #[allow(dead_code)] // disabilita il `dead_code` che solleva un warning per i moduli importati ma non utilizzati
     struct Structure(i32);
 
-    // This will not compile because `Structure` does not implement
-    // fmt::Display.
+    // Questo non compilerà perché `Structure` non implementa `fmt::Display`.
     // println!("This struct `{}` won't print...", Structure(3));
-    // TODO ^ Try uncommenting this line
+    // TODO ^ prova ad eliminare il commento su questa riga
 
-    // For Rust 1.58 and above, you can directly capture the argument from a
-    // surrounding variable. Just like the above, this will output
-    // "    1", 4 white spaces and a "1".
+    // Per Rust 1.58 e versioni successive, puoi catturare direttamente l'argomento da una variabile circostante.
+    // Proprio come nell'esempio precedente, ciò produrrà l'output desiderato.
+    // "    1", 4 spazi vuoti e un "1".
     let number: f64 = 1.0;
     let width: usize = 5;
     println!("{number:>width$}");
 }
 ```
 
-[`std::fmt`][fmt] contains many [`traits`][traits] which govern the display
-of text. The base form of two important ones are listed below:
+[`std::fmt`][fmt] contiene diversi [`trait`][traits] che regolano la formattazione del testo.
+Di seguito sono elencate le forme di base di due strumenti importanti:
 
-* `fmt::Debug`: Uses the `{:?}` marker. Format text for debugging purposes.
-* `fmt::Display`: Uses the `{}` marker. Format text in a more elegant, user
-  friendly fashion.
+* `fmt::Debug`: Utilizza il marcatore `{:?}`. Formatta il testo per scopi di debug.
+* `fmt::Display`: Utilizza il marcatore `{}`. Formatta il testo in modo più elegante e user-friendly.
 
-Here, we used `fmt::Display` because the std library provides implementations
-for these types. To print text for custom types, more steps are required.
+In questo caso, abbiamo usato `fmt::Display` perché la libreria std fornisce implementazioni per questi tipi.
+Per stampare il testo per i tipi personalizzati, sono necessari altri passaggi.
 
-Implementing the `fmt::Display` trait automatically implements the
-[`ToString`] trait which allows us to [convert] the type to [`String`][string].
+Implementare il trait `fmt::Display` significa ereditare anche l'implementazione del trait
+[`ToString`] che permette di [convertire] il tipo in una [`Stringa`][string].
 
-In *line 46*, `#[allow(dead_code)]` is an [attribute] which only apply to the module after it.
+Alla *riga 46*, `#[allow(dead_code)]` è un [attributo] che si applica solo al modulo in cui è contenuto.
 
-### Activities
+### Esercizi
 
-* Fix the issue in the above code (see FIXME) so that it runs without
-  error.
-* Try uncommenting the line that attempts to format the `Structure` struct
-  (see TODO)
-* Add a `println!` macro call that prints: `Pi is roughly 3.142` by controlling
-  the number of decimal places shown. For the purposes of this exercise, use
-  `let pi = 3.141592` as an estimate for pi. (Hint: you may need to check the
-  [`std::fmt`][fmt] documentation for setting the number of decimals to display)
+* Correggere il problema nel codice precedente (vedere FIXME) in modo che venga eseguito senza errori.
+* Prova a togliere il commento dalla riga che tenta di formattare la struct `Structure`
+  (vedere TODO)
+* Aggiungere una chiamata macro `println!` che stampa: `Pi è approssimativamente 3,142` controllando
+  il numero di cifre decimali visualizzate. Ai fini di questo esercizio, utilizzare
+  `let pi = 3,141592` come stima del pi greco. (Suggerimento: potrebbe essere necessario controllare il parametro
+  [`std::fmt`][fmt] per impostare il numero di decimali da visualizzare.)
 
-### See also:
+### Vedi anche:
 
-[`std::fmt`][fmt], [`macros`][macros], [`struct`][structs], [`traits`][traits], and [`dead_code`][dead_code]
+[`std::fmt`][fmt], [`macros`][macros], [`struct`][structs], [`traits`][traits], e [`dead_code`][dead_code]
 
 [fmt]: https://doc.rust-lang.org/std/fmt/
 [macros]: ../macros.md
@@ -111,6 +107,6 @@ In *line 46*, `#[allow(dead_code)]` is an [attribute] which only apply to the mo
 [structs]: ../custom_types/structs.md
 [traits]: https://doc.rust-lang.org/std/fmt/#formatting-traits
 [`ToString`]: https://doc.rust-lang.org/std/string/trait.ToString.html
-[convert]: ../conversion/string.md
-[attribute]: ../attribute.md
+[convertire]: ../conversion/string.md
+[attributo]: ../attribute.md
 [dead_code]: ../attribute/unused.md
